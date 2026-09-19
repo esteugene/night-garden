@@ -10,6 +10,6 @@
     "unwallpaper": "sh wallpaper/uninstall.sh",
     "release": "sh wallpaper/release.sh",
     "check": "node --check serve.mjs && for f in scenes/night-garden/src/*.js; do node --check \"$f\" || exit 1; done",
-    "test": "for f in scenes/night-garden/tests/*.mjs; do node \"$f\" || exit 1; done"
+    "test": "for f in scenes/night-garden/tests/*.mjs; do node --import ./scenes/night-garden/tests/support/register.mjs \"$f\" || exit 1; done"
   }
 }

@@ -54,7 +54,7 @@ TEXT
 if [ "$identity" = "-" ]; then
 	echo "Signed ad-hoc: no Developer ID in the keychain. This build only runs on this Mac."
 elif xcrun notarytool history --keychain-profile "$profile" >/dev/null 2>&1; then
-	ditto -c -k --keepParent "$app" "$build/notarize.zip"
+	ditto -c -k --keepParent --norsrc "$app" "$build/notarize.zip"
 	xcrun notarytool submit "$build/notarize.zip" --keychain-profile "$profile" --wait
 	xcrun stapler staple "$app"
 else
@@ -63,6 +63,6 @@ fi
 
 zip="$dist/Night-Garden-$version.zip"
 rm -f "$zip"
-(cd "$dist" && ditto -c -k --keepParent "$(basename "$stage")" "$zip")
+(cd "$dist" && ditto -c -k --keepParent --norsrc "$(basename "$stage")" "$zip")
 codesign -dv "$app" 2>&1 | sed -n 's/^Authority=/  signed by: /p' | head -1
 echo "Release: $zip"

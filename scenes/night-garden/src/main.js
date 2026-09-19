@@ -125,9 +125,3 @@ async function start(){
  if(!host&&new URLSearchParams(location.search).has('edit')){const {createTuningEditor}=await import('./tuning-editor.js');editor=createTuningEditor({scene,camera,renderer,canvas,loop,world});}
 }
 start().catch(e=>{console.error(e);failures.push(e.message);loading.textContent='Could not load garden: '+e.message});
-// A labelled concept overlay enables comparison at the same viewport and crop.
-const referenceButton=document.querySelector('#reference'),referenceView=document.querySelector('#reference-view');
-referenceButton?.addEventListener('click',()=>{const open=referenceView.hidden;referenceView.hidden=!open;referenceButton.setAttribute('aria-pressed',String(open));referenceButton.textContent=open?'Back to garden':'Reference';referenceView.style.opacity=String(Number(document.querySelector('#reference-opacity').value)/100)});
-addEventListener('keydown',e=>{if(e.key==='Escape'&&!referenceView.hidden)referenceButton.click()});
-
-const overlaySlider=document.querySelector("#reference-opacity");overlaySlider?.addEventListener("input",()=>{referenceView.style.opacity=String(Number(overlaySlider.value)/100)});

@@ -46,9 +46,12 @@ final class SceneHandler: NSObject, WKURLSchemeHandler {
       return
     }
     let type = Self.types[file.pathExtension.lowercased()] ?? "application/octet-stream"
-    task.didReceive(
-      URLResponse(
-        url: url, mimeType: type, expectedContentLength: data.count, textEncodingName: nil))
+    // A real HTTP 200, not a bare URLResponse: fetch() in the page reads the status, and a
+    // status of 0 makes it treat tuning.json (and anything else) as failed.
+    let response = HTTPURLResponse(
+      url: url, statusCode: 200, httpVersion: "HTTP/1.1",
+      headerFields: ["Content-Type": type, "Content-Length": String(data.count)])!
+    task.didReceive(response)
     task.didReceive(data)
     task.didFinish()
   }

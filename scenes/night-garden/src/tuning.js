@@ -26,7 +26,7 @@ export function mergeTuning(extra){
   if(Array.isArray(extra.moss.erase))data.moss.erase=extra.moss.erase.map(e=>e.slice(0,4));}
 }
 export async function loadTuning(){
- try{const r=await fetch('tuning.json',{cache:'no-store'});if(r.ok)mergeTuning(await r.json());}catch{}
+ try{const r=await fetch('tuning.json',{cache:'no-store'});if(r.ok||r.status===0)mergeTuning(await r.json());}catch{}
  try{const local=localStorage.getItem(STORAGE_KEY);if(local)mergeTuning(JSON.parse(local));}catch{}
  for(const [id,o] of registry.objects)applyObject(id,o);
  for(const [id,l] of registry.lights)applyLight(id,l);

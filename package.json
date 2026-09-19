@@ -1,0 +1,15 @@
+{
+  "name": "night-garden",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "description": "A live night-forest wallpaper for macOS: moss, moths and fireflies rendered in real time, built on Desktop Habitats.",
+  "scripts": {
+    "start": "node serve.mjs",
+    "wallpaper": "sh wallpaper/install.sh",
+    "unwallpaper": "sh wallpaper/uninstall.sh",
+    "release": "sh wallpaper/release.sh",
+    "check": "node --check serve.mjs && for f in scenes/night-garden/src/*.js; do node --check \"$f\" || exit 1; done",
+    "test": "for f in scenes/night-garden/tests/*.mjs; do node \"$f\" || exit 1; done"
+  }
+}
